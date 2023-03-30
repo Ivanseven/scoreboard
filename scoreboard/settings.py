@@ -79,7 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.postgresql',
         'NAME': 'score',
-        'USER': 'postgres',
+        'USER': getenv('DBUSER'),
         'PASSWORD': getenv('DBPASSWORD'),
         'HOST': '127.0.0.1',
         'PORT': '5432',
