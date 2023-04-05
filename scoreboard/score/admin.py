@@ -4,7 +4,7 @@ from .models import Score
 
 
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ['user', 'name', 'score', 'created_at']
-    search_fields = ['user__username', 'name', 'score', ]
+    list_display = ['user', 'name', 'value', 'created_at']
+    search_fields = ['user__username', 'name', 'value', ]
 
 admin.site.register(Score, ScoreAdmin)
