@@ -2,8 +2,9 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
-from scoreboard.player.serializers import UserSerializer, GroupSerializer
+from scoreboard.player.serializers import PlayerScoreSerializer, UserSerializer, GroupSerializer
 from scoreboard.player.models import Player
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -23,14 +24,11 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class ListPlayerScores(APIView):
-    """
-    View to list all users in the system.
-    """
+class PlayerViewSet(viewsets.ViewSet):
     authentication_classes = []
     permission_classes = []
 
-    def get(self, request, format=None):
+    def list(self, request, format=None):
         """
         Return a list of all players & their scores
         """
@@ -38,3 +36,11 @@ class ListPlayerScores(APIView):
         player_scores = [ {'player_id': player.id, 'username': player.username, 'score':player.score} for player in Player.objects.filter(is_staff=False)]
 
         return Response(player_scores)
+    
+    @action(detail=True,url_name='get_score', methods=['get'])    
+    def get_score(self, request, format=None, pk=None):
+        
+        player = Player.objects.filter(is_staff=False, pk=pk).first()
+        serializer = PlayerScoreSerializer(player)
+    
+        return Response(serializer.data)

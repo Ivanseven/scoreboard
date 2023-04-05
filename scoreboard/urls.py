@@ -15,17 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework import routers
-from scoreboard.player import views as AuthViews
-from scoreboard.score import views as ScoreViews
-
-router = routers.DefaultRouter()
-router.register(r'users', AuthViews.UserViewSet)
-router.register(r'groups', AuthViews.GroupViewSet)
+from scoreboard.player.urls import router as player_router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path('', include(player_router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('players/', include('scoreboard.player.urls.players', namespace='players')),
 ]
