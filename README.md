@@ -38,8 +38,13 @@ Don't forget to make migrations and migrate!
 python manage.py makemigrations
 python manage.py migrate
 ```
+
 Finally, run the server!
 ```
 python manage.py runserver
 ```
 
+If you would like to run the testcases, you may use:
+```
+python manage.py test
+```
